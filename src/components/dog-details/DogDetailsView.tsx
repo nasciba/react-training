@@ -7,7 +7,9 @@ import cardStyle from './style';
 interface Props {
     image: string,
     dogsName: string,
-    bark: () => void
+    scolds: number,
+    bark: () => void,
+    countScolds: () => void
 }
 
 const DogDetailsView = (props: Props) => {
@@ -20,6 +22,8 @@ const DogDetailsView = (props: Props) => {
             </Box>
             <Typography component='p'>{props.dogsName}</Typography>
             <Button onClick={props.bark}>Bark</Button>
+            <Typography>This dog has already been scolded {props.scolds} times!</Typography>
+            <Button onClick={props.countScolds}>Scold!</Button>
         </Grid>
     )
 }

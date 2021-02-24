@@ -6,23 +6,30 @@ import Button from '../button/Button';
 
 describe('DogDetailsView', () => {
     const mockFunction = jest.fn();
-    const wrapper = shallow(
-        <DogDetailsView image="anImage" dogsName="Adolfo" bark={mockFunction} />
-    )
-
+    const instanceMockFunction = mockFunction();
+   
     it('should render the view with the right props', () => {
-        wrapper.matchesElement(
-            <Grid container className="aClass">
-                <Box display="flex" flexDirection="column" className="aClass">
-                    <img src="anImage" alt="Dog image" />
+        const wrapper = shallow(
+            <DogDetailsView scolds={0} image={'anImage'} dogsName={"Adolfo"} bark={instanceMockFunction} countScolds={mockFunction} />
+        )
+        expect(wrapper.matchesElement(
+            <Grid container className="makeStyles-root-1">
+                <Box display="flex" flexDirection="column" className='makeStyles-media-2'>
+                    <img src={'anImage'} alt="Dog image" />
                 </Box>
                 <Typography component='p'>Adolfo</Typography>
-                <Button onClick={mockFunction}>Bark</Button>
+                <Button onClick={instanceMockFunction}>Bark</Button>
+                <Typography>This dog has already been scolded {0} times!</Typography>
+                <Button onClick={mockFunction}>Scold!</Button>
             </Grid>
-        )
+        )).toEqual(true)
     })
     it('should handle the onClick event', () => {
-        wrapper.find('Button').simulate('click');
+        const wrapper = shallow(
+            <DogDetailsView scolds={0} countScolds={mockFunction} image={'anImage'} dogsName={"Adolfo"} bark={mockFunction} />
+        )
+        wrapper.find('Button').at(0).simulate('click');
+        wrapper.find('Button').at(1).simulate('click');
         expect(mockFunction).toHaveBeenCalled();
     })
 })

@@ -12,10 +12,11 @@ it('should import DogDetailsView component', () => {
             dogsName={"Adolfo"}
         />
     );
-    console.log(wrapper.debug())
     expect(wrapper.matchesElement(
         <DogDetailsView image={"anImage"}
             dogsName={"Adolfo"}
+            scolds={0}
+            countScolds={instanceMockFunction}
             bark={instanceMockFunction}
         />)).toEqual(true);
 

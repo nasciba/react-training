@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DogDetailsView from './DogDetailsView';
 
 interface Props {
@@ -8,13 +8,18 @@ interface Props {
 
 
 const DogDetails = (props: Props) => {
+    const [count, setCount] = useState(0);
+
+    const counter = () => {
+        setCount(count + 1)
+    }
     
     const makeDogBark = () => {
-        alert ('auauauau')
+        alert ('au au au au')
     }
 
     return (
-            <DogDetailsView image={props.image} dogsName={props.dogsName} bark={makeDogBark}/>
+            <DogDetailsView image={props.image} dogsName={props.dogsName} scolds={count} countScolds={counter} bark={makeDogBark}/>
     )
 }
 
