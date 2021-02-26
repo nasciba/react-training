@@ -5,7 +5,7 @@ const buttonStyle = makeStyles({
         margin: 15,
         borderRadius: 5,
         height: 25,
-        backgroundColor: '#52F799',
+        backgroundColor: 'primary',
         border: 'solid #52F799 2px'
 
     },

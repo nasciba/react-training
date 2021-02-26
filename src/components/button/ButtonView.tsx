@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import buttonStyle from './style'
+import buttonStyle from './Button.style'
 
 interface Props {
     onClick: () => void,

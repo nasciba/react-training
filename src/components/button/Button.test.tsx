@@ -2,7 +2,6 @@ import Button from './Button';
 import { shallow } from 'enzyme'
 
 describe("Button", () => {
-
   it('should render the view with the right props', () => {
     const mockFunction = jest.fn();
     const wrapper = shallow(
@@ -11,7 +10,6 @@ describe("Button", () => {
     </Button>)
     wrapper.find('ButtonView').simulate('click');
     expect(mockFunction).toHaveBeenCalled();
-    console.log(wrapper.text())
     expect(wrapper.text()).toEqual('<ButtonView />')
   });
 })

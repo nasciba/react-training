@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Box } from '@material-ui/core/';
 import Button from '../button/Button';
 import { Grid } from '@material-ui/core';
-import cardStyle from './style';
+import cardStyle from './DogDetails.style';
 
 interface Props {
     image: string,
