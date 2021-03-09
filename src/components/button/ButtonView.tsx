@@ -3,14 +3,15 @@ import buttonStyle from './Button.style'
 
 interface Props {
     onClick: () => void,
-    children: ReactNode
+    children: ReactNode,
+    type: "button" | "reset" | "submit" | undefined
 }
 
-const ButtonView = ({ children, onClick }: Props) => {
+const ButtonView = ({ type, children, onClick }: Props) => {
     const classes = buttonStyle()
     return (
         <>
-            <button className={classes.root} onClick={onClick}>
+            <button type={type} className={classes.root} onClick={onClick}>
                 {children}
             </button>
         </>

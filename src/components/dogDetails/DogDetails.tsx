@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import DogDetailsView from './DogDetailsView';
 
 interface Props {
@@ -6,20 +6,19 @@ interface Props {
     dogsName: string,
 }
 
-
 const DogDetails = (props: Props) => {
     const [count, setCount] = useState(0);
 
-    const counter = () => {
+    const onCount = useCallback(() => {
         setCount(count + 1)
-    }
+    }, [count])
     
-    const makeDogBark = () => {
+    const onBark = () => {
         alert ('au au au au')
     }
 
     return (
-            <DogDetailsView image={props.image} dogsName={props.dogsName} scolds={count} countScolds={counter} bark={makeDogBark}/>
+            <DogDetailsView image={props.image} dogsName={props.dogsName} scolds={count} onCountScolds={onCount} onBark={onBark}/>
     )
 }
 

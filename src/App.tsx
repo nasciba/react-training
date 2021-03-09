@@ -4,7 +4,8 @@ import DogDetails from './components/dogDetails/DogDetails'
 import { CssBaseline, ThemeProvider, Grid, Typography } from '@material-ui/core';
 import theme from './styles/theme';
 import appStyle from './styles/App.style';
-import CreateBeerForm from './components/createBeerForm/CreateBeerForm'
+import CreateBeerForm from './components/createBeerForm/CreateBeerForm';
+import CreateBeerFormik from './components/createBeerFormikForm/CreateBeerFormik'
 
 function App() {
   const classes = appStyle();
@@ -20,7 +21,7 @@ function App() {
           <Grid container className={classes.root}>
             <Grid container direction='column' justify="center" alignItems="center" item sm={3}>
               <Typography>Exercise 1</Typography>
-              <Button onClick={showAlert}>Click here!</Button>
+              <Button type={'button'} onClick={showAlert}>Click here!</Button>
             </Grid>
             <Grid container direction='column' justify="center" alignItems="center" item sm={3}>
             <Typography>Exercise 2, 3 and 4</Typography>
@@ -33,6 +34,10 @@ function App() {
             <Grid container direction='column' justify="center" alignItems="center" item sm={3}>
             <Typography>Exercise 5</Typography>
               <CreateBeerForm/>
+            </Grid>
+            <Grid container direction='column' justify="center" alignItems="center" item sm={3}>
+            <Typography>Exercise 6 - Using Formik</Typography>
+              <CreateBeerFormik/>
             </Grid>
           </Grid>
         </ThemeProvider>

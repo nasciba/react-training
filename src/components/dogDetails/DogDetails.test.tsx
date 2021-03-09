@@ -5,22 +5,29 @@ import DogDetails from './DogDetails'
 
 describe("DogDetails", () => {
 
-    it('should import DogDetailsView component', () => {
-        const mockFunction = jest.fn();
-        const instanceMockFunction = mockFunction();
-
+    it('should render the view with the right props', () => {
         const wrapper = shallow(
             <DogDetails image={"anImage"}
                 dogsName={"Adolfo"}
             />
         );
-        expect(wrapper.matchesElement(
-            <DogDetailsView image={"anImage"}
-                dogsName={"Adolfo"}
-                scolds={0}
-                countScolds={instanceMockFunction}
-                bark={instanceMockFunction}
-            />)).toEqual(true);
+
+        expect(wrapper.type()).toBe(DogDetailsView)
+        expect(wrapper.props()).toMatchObject({
+            "image": "anImage",
+            "dogsName": "Adolfo",
+
+        });
+        // describe('onCount', () => {
+        //     it('should update the counter to a new value', () => {
+        //         const wrapper = shallow(
+        //             <DogDetails image={"anImage"}
+        //                 dogsName={"Adolfo"}
+        //             />
+        //         );
+        //         wrapper.setState({ count: 0})
+        //     })
+        // })
 
     });
 })

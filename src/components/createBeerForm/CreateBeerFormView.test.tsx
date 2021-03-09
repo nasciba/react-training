@@ -10,7 +10,7 @@ describe('CreateBeerForm', () => {
     it('should render elements correctly', () => {
         const wrapper = shallow(
             <CreateBeerFormView
-            beerName={'Brahma'}
+                beerName={'Brahma'}
                 beerType='ale'
                 ingredients="Water and corn"
                 hasCorn={false}
@@ -18,43 +18,41 @@ describe('CreateBeerForm', () => {
                 handleCheckboxValue={instanceMockFunction}
                 handleSelectElement={instanceMockFunction}
                 handleSubmit={instanceMockFunction}
-            />
-    
-        )
+            />)
         expect(wrapper.matchesElement(
             <form>
-            <Box display="flex" flexDirection="column">
-                <label>Beer name:
+                <Box display="flex" flexDirection="column">
+                    <label>Beer name:
                     <input
-                        type='text'
-                        name="beerName"
-                        value='Brahma'
-                        onChange={mockFunction}
-                    />
-                </label>
-                <label>Type:
+                            type='text'
+                            name="beerName"
+                            value='Brahma'
+                            onChange={mockFunction}
+                        />
+                    </label>
+                    <label>Type:
                     <select
-                        name="beerType" value='ale'
-                        onChange={mockFunction}>
-                        <option value="ale" > Ale</option>
-                        <option value="lager">Lager</option>
-                        <option value="stout">Stout</option>
-                        <option value="pilsen">Pilsen</option>
+                            name="beerType" value='ale'
+                            onChange={mockFunction}>
+                            <option value="ale" > Ale</option>
+                            <option value="lager">Lager</option>
+                            <option value="stout">Stout</option>
+                            <option value="pilsen">Pilsen</option>
                     </select>
-                </label>
-                <label>
-                    Ingredients:
+                    </label>
+                    <label>
+                        Ingredients:
                     <textarea
-                        value="Water and corn" name='ingredients' onChange={mockFunction}
-                    />
-                </label>
-                <label>
-                    Has corn?
+                            value="Water and corn" name='ingredients' onChange={mockFunction}
+                        />
+                    </label>
+                    <label>
+                        Has corn?
                     <input type="checkbox" onClick={mockFunction} />
-                </label>
-                <Button onClick={mockFunction}>Enviar</Button>
-            </Box>
-        </form>
-            ))
+                    </label>
+                    <Button type="submit" onClick={mockFunction}>Enviar</Button>
+                </Box>
+            </form>
+        ))
     })
 })

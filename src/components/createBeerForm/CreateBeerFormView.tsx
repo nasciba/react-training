@@ -45,7 +45,7 @@ const CreateBeerFormView = (props: Props) => {
                         value={props.ingredients} name='ingredients' onChange={props.handleChange}
                     />
                 </label>
-                <Button onClick={props.handleSubmit}>Enviar</Button>
+                <Button type="submit" onClick={props.handleSubmit}>Enviar</Button>
             </Box>
         </form>
     )

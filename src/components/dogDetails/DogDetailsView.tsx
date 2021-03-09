@@ -8,8 +8,8 @@ interface Props {
     image: string,
     dogsName: string,
     scolds: number,
-    bark: () => void,
-    countScolds: () => void
+    onBark: () => void,
+    onCountScolds: () => void
 }
 
 const DogDetailsView = (props: Props) => {
@@ -21,9 +21,9 @@ const DogDetailsView = (props: Props) => {
                 <img src={props.image} alt="Dog image" />
             </Box>
             <Typography component='p'>{props.dogsName}</Typography>
-            <Button onClick={props.bark}>Bark</Button>
+            <Button type="button" onClick={props.onBark}>Bark</Button>
             <Typography>This dog has already been scolded {props.scolds} times!</Typography>
-            <Button onClick={props.countScolds}>Scold!</Button>
+            <Button type="button" onClick={props.onCountScolds}>Scold!</Button>
         </Grid>
     )
 }

@@ -3,12 +3,13 @@ import ButtonView from './ButtonView'
 
 interface Props {
     onClick: () => void,
-    children: ReactNode
+    children: ReactNode,
+    type: "button" | "reset" | "submit" | undefined
 }
 
-const Button = ({children, onClick} : Props) => {
+const Button = ({type, children, onClick} : Props) => {
     return(
-        <ButtonView onClick={onClick}>{children}</ButtonView>
+        <ButtonView type={type} onClick={onClick}>{children}</ButtonView>
     )
 }
 

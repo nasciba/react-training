@@ -11,16 +11,12 @@ describe('CreateBeerForm', () => {
             <CreateBeerForm />
         )
         expect(wrapper.type()).toBe(CreateBeerFormView)
-        expect(wrapper.matchesElement(
-            <CreateBeerFormView
-                beerName="name"
-                beerType='ale'
-                ingredients="Water and corn"
-                hasCorn={false}
-                handleChange={instanceMockFunction}
-                handleCheckboxValue={instanceMockFunction}
-                handleSelectElement={instanceMockFunction}
-                handleSubmit={instanceMockFunction}
-            />))
+        expect(wrapper.props()).toMatchObject({
+                beerName: "",
+                beerType: "",
+                ingredients: "",
+                hasCorn: false,
+                
+        })
     })
 })
