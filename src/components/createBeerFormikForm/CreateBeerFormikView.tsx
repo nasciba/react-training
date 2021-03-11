@@ -23,49 +23,33 @@ function CreateBeerFormikView(props: Props) {
             ingredients: ''
         }), [])
 
-    const onClearForm = useCallback(
-        ({ resetForm }) => {
-            resetForm();
-        },
-        [initialValues]
-    )
-
-    const onSetSubmitting = useCallback(
-        ( { setSubmitting }) => {
-            setSubmitting(false)
-        },
-        [initialValues]
-    )
-
+    
     const handleSubmit = useCallback(
         (values: CreateBeerFormikViewTypes, { setSubmitting, resetForm }) => {
             props.onSubmit(values);
-            console.log('aqui setSubmitting', typeof setSubmitting)
-            onSetSubmitting({ setSubmitting });
-            onClearForm({ resetForm });
+            setSubmitting(false);
+            resetForm()
         },
         [props.onSubmit]
     )
-
-
 
     const validationSchema = useMemo(
         () => {
             return Yup.object({
                 beerName: Yup.string()
+                    .required('Required')
                     .max(15, 'Must be 15 characters or less')
-                    .min(2, 'Must be 2 characters or more')
-                    .required('Required'),
+                    .min(2, 'Must be 2 characters or more'),
                 beerType: Yup.string()
                     .required('Required'),
                 ingredients: Yup.string()
+                    .required('Required')
                     .max(200, 'Must be 200 characters or less')
-                    .min(10, 'Must be 10 characters or more')
-                    .required('Required'),
+                    .min(10, 'Must be 10 characters or more'),
             })
         }, []
     )
-
+   
     return (
         <Formik
             initialValues={initialValues}
@@ -78,11 +62,11 @@ function CreateBeerFormikView(props: Props) {
                         type={'text'}
                         name={'beerName'}
                     />
-                    <ErrorMessage name="beerName" />
+                    <ErrorMessage name='beerName' />
                     <FormikSelectInput name="beerType" label="Type:">
                         {typesOfBeer}
                     </FormikSelectInput>
-                    <ErrorMessage name="beerType" />
+                    <ErrorMessage name='beerType' />
                     <FormikInput
                         label={"Has corn?"}
                         type={'checkbox'}
