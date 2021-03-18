@@ -7,7 +7,6 @@ function CreateBeerFormik() {
 
   const onSubmit = useCallback((values: CreateBeerFormikTypes) => {
     console.log(values);
-    alert(JSON.stringify(values, null, 2));
   },
     []
   )

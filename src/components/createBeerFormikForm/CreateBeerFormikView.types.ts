@@ -1,8 +1,8 @@
 export interface CreateBeerFormikViewTypes {
     beerName: string,
     beerType: string,
-    hasCorn: boolean, 
-    ingredients: string, 
+    hasCorn: boolean,
+    ingredients: string,
 }
 
 

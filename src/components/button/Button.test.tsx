@@ -11,9 +11,9 @@ describe("Button", () => {
     </Button>)
     expect(wrapper.type()).toBe(ButtonView)
     expect(wrapper.props()).toMatchObject({
-      "children": "Children",
-      "onClick": mockFunction,
-      "type": "button"
+      children: "Children",
+      onClick: mockFunction,
+      type: "button"
     });
   });
 

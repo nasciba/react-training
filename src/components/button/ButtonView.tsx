@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import buttonStyle from './Button.style'
+import buttonStyle from './Button.style';
+import Button from '@material-ui/core/Button'
 
 interface Props {
     onClick: () => void,
@@ -7,15 +8,12 @@ interface Props {
     type: "button" | "reset" | "submit" | undefined
 }
 
-const ButtonView = ({ type, children, onClick }: Props) => {
+function ButtonView({ type, children, onClick }: Props) {
     const classes = buttonStyle()
     return (
-        <>
-            <button type={type} className={classes.root} onClick={onClick}>
-                {children}
-            </button>
-        </>
-        
+        <Button size='small' color='primary' type={type} className={classes.root} onClick={onClick}>
+            {children}
+        </Button>
     )
 }
 

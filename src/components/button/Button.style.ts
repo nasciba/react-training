@@ -1,12 +1,10 @@
-import { makeStyles} from '@material-ui/core'
+import { makeStyles} from '@material-ui/core';
 
 const buttonStyle = makeStyles({
     root: {
-        margin: 15,
+        margin: 10,
         borderRadius: 5,
-        height: 25,
-        backgroundColor: 'primary',
-        border: 'solid #52F799 2px'
+        fontWeight:'bold'
 
     },
 })

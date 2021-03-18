@@ -1,7 +1,6 @@
-import React from 'react'
 import { shallow } from 'enzyme';
 import DogDetailsView from './DogDetailsView';
-import DogDetails from './DogDetails'
+import DogDetails from './DogDetails';
 
 describe("DogDetails", () => {
 
@@ -12,23 +11,38 @@ describe("DogDetails", () => {
             />
         );
 
-        expect(wrapper.type()).toBe(DogDetailsView)
+        expect(wrapper.type()).toBe(DogDetailsView);
         expect(wrapper.props()).toMatchObject({
             "image": "anImage",
             "dogsName": "Adolfo",
 
         });
-        // describe('onCount', () => {
-        //     it('should update the counter to a new value', () => {
-        //         const wrapper = shallow(
-        //             <DogDetails image={"anImage"}
-        //                 dogsName={"Adolfo"}
-        //             />
-        //         );
-        //         wrapper.setState({ count: 0})
-        //     })
-        // })
-
     });
+
+    it('should update the counter to a new value', () => {
+        const wrapper = shallow(
+            <DogDetails image={"anImage"}
+                dogsName={"Adolfo"}
+            />
+        );
+        wrapper.invoke('onCountScolds')();
+
+        expect(wrapper.prop('scolds')).toBe(1);
+
+    })
+
+    it('should show an alert when the Bark button is clicked', () => {
+        jest.spyOn(window, 'alert').mockImplementation(() => { });
+        const wrapper = shallow(
+            <DogDetails image={"anImage"}
+                dogsName={"Adolfo"}
+            />
+        );
+        wrapper.invoke('onBark')();
+        expect(window.alert).toBeCalled();
+
+    })
+
+
 })
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import Button from '../button/Button';
-import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import formStyle from './CreateBeerFormView.style';
 
 interface Props {
     beerName: string,
@@ -13,41 +18,67 @@ interface Props {
     handleSelectElement: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-const CreateBeerFormView = (props: Props) => {
+function CreateBeerFormView(props: Props) {
+    const classes = formStyle()
     return (
-        <form>
-            <Box display="flex" flexDirection="column">
-                <label>Beer name:
-                    <input
-                        type='text'
-                        name="beerName"
-                        value={props.beerName}
-                        onChange={props.handleChange}
+        <FormControl
+            className={classes.root}
+        >
+            <TextField
+                label='Beer name'
+                name='beerName'
+                variant='outlined'
+                onChange={props.handleChange}
+                className={classes.margins}
+                value={props.beerName}
+            />
+            <TextField
+                select={true}
+                variant='outlined'
+                className={classes.margins}
+                label='Beer type'
+                name='beerType'
+                onChange={props.handleChange}
+                value={props.beerType}
+            >
+                <MenuItem color='primary' key='ale' value='ale'>
+                    Ale
+                    </MenuItem>
+                <MenuItem color='primary' key='lager' value='lager'>
+                    Lager
+                    </MenuItem>
+                <MenuItem color='primary' key='stout' value='stout'>
+                    Stout
+                    </MenuItem>
+                <MenuItem color='primary' key='pilsen' value='pilsen'>
+                    Pilsen
+                </MenuItem>
+            </TextField>
+            <TextField
+                label="Ingredients"
+                name="ingredients"
+                variant='outlined'
+                className={classes.margins}
+                onChange={props.handleChange}
+                value={props.ingredients}
+                multiline
+                rows={4}
+            />
+            <FormControlLabel
+                label="Contains corn"
+                labelPlacement='end'
+                className={classes.margins}
+                control={
+                    <Checkbox
+                        onClick={props.handleCheckboxValue}
+                        name='hasCorn'
+                        color='primary'
+                        checked={props.hasCorn}
                     />
-                </label>
-                <label>Type:
-                    <select
-                        name="beerType" value={props.beerType}
-                        onChange={props.handleSelectElement}>
-                        <option value="ale" > Ale</option>
-                        <option value="lager">Lager</option>
-                        <option value="stout">Stout</option>
-                        <option value="pilsen">Pilsen</option>
-                    </select>
-                </label>
-                <label>
-                    Has corn?
-                    <input type="checkbox" onClick={props.handleCheckboxValue} />
-                </label>
-                <label>
-                    Ingredients:
-                    <textarea
-                        value={props.ingredients} name='ingredients' onChange={props.handleChange}
-                    />
-                </label>
-                <Button type="submit" onClick={props.handleSubmit}>Enviar</Button>
-            </Box>
-        </form>
+                }
+            />
+            <Button type='submit' onClick={props.handleSubmit}>Save</Button>
+        </FormControl>
     )
 }
 

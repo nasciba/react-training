@@ -2,13 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { CreateBeerFormTypes } from './CreateBeerForm.types'
 import CreateBeerFormView from './CreateBeerFormView'
 
-const CreateBeerForm = () => {
+function CreateBeerForm() {
     const [formInfo, setFormInfo] = useState<CreateBeerFormTypes>({
         beerName: '',
         beerType: '',
         hasCorn: false,
         ingredients: ''
-    })
+    });
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target
@@ -18,10 +18,10 @@ const CreateBeerForm = () => {
         });
     }, [formInfo])
 
-    const handleSelectElement = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSelectElement = useCallback((event: React.ChangeEvent<{ value: unknown }>) => {
         setFormInfo({
             ...formInfo,
-            beerType: event.target.value
+            beerType: event.target.value as string
         });
     }, [formInfo])
 
@@ -33,7 +33,7 @@ const CreateBeerForm = () => {
     }, [formInfo])
 
     const handleSubmit = useCallback(() => {
-        console.log(formInfo);
+        console.log(formInfo)
         setFormInfo({
             beerName: '',
             beerType: '',

@@ -1,23 +1,23 @@
 import { shallow } from 'enzyme';
 import { CreateBeerFormikTypes } from './CreateBeerFormik.types'
 import CreateBeerFormikView from './CreateBeerFormikView';
-import { createBeerFormikStyles } from './CreateBeerFormikStyle.styles';
-import { Formik, Form, ErrorMessage, FormikValues, FormikHelpers, FormikState, FormikHandlers, FormikTouched, FormikErrors, FormikComputedProps } from 'formik';
-import FormikInput from '../formikInputTextForm/FormikInputText';
-import FormikSelectInput from '../formikSelectInputForm/formikSelectInput';
-import FormikInputTextarea from '../formikTextareaForm/FormikInputTextArea'
+import createBeerFormikStyles from './CreateBeerFormikStyle.styles';
+import { Formik, Form, ErrorMessage, FormikValues, FormikComputedProps, FormikHelpers, FormikState, FormikHandlers, FormikTouched, FormikErrors } from 'formik';
+import FormikInput from './formFields/FormikInputText';
+import FormikInputCheckbox from './formFields/formikInputCheckbox';
+import FormikSelectInput from './formFields/formikSelectInput';
+import FormikInputTextarea from './formFields/formikInputTextArea'
 import { typesOfBeer } from './typesOfBeer';
 import Button from '@material-ui/core/Button';
-import * as Yup from "yup";
 
 jest.mock('./CreateBeerFormikStyle.styles.tsx')
-
 
 describe("CreateBeerFormikView", () => {
 
     beforeEach(() => {
         (createBeerFormikStyles as jest.Mock).mockReturnValue({
             root: 'root',
+            margins: 'margins'
         });
     });
 
@@ -36,47 +36,124 @@ describe("CreateBeerFormikView", () => {
                 ingredients: ''
             }
         });
-
     })
 
     it('should render the form correctly', () => {
         const onSubmitMock = jest.fn();
         const validationSchemaMock = jest.fn();
 
-        const propsFormik: any = {
+        const mockPropsFormik: any = {
             onSubmit: onSubmitMock,
-            initialValues: {},
+            initialValues: {
+                beerName: '',
+                beerType: '',
+                hasCorn: false,
+                ingredients: ''
+            },
+
             validationSchema: validationSchemaMock
         }
+
+        const mockFormikHandlers = {
+            getFieldHelpers: jest.fn(),
+            getFieldMeta: jest.fn(),
+            getFieldProps: jest.fn(),
+            handleBlur: jest.fn(),
+            handleChange: jest.fn(),
+            handleReset: jest.fn(),
+            handleSubmit: jest.fn(),
+        } as FormikHandlers;
+
+        const touch: FormikTouched<FormikValues> = {
+            beerName: false,
+            beerType: false,
+            hasCorn: false,
+            ingredients: false,
+        };
+
+        const error: FormikErrors<FormikValues> = {
+            beerName: '',
+            beerType: '',
+            hasCorn: '',
+            ingredients: '',
+        };
+
+        const mockComputedProps: FormikComputedProps<FormikValues> = {
+            dirty: false,
+            isValid: false,
+            initialValues: {
+                beerName: '',
+                beerType: '',
+                hasCorn: false,
+                ingredients: ''
+            },
+            initialErrors: error,
+            initialTouched: touch,
+        }
+        const mockRegisteredField = {
+            registerField: jest.fn(),
+            unregisterField: jest.fn()
+        }
+
+        const mockPropsStateFormik = {
+            touched: touch,
+            errors: error,
+            values: { beerName: 'Brahma', beerType: 'pilsen', hasCorn: true, ingredients: 'Water, corn.' },
+            isSubmitting: false,
+            isValidating: false,
+            submitCount: 1,
+        } as FormikState<FormikValues>
 
         const wrapper = shallow(
             <CreateBeerFormikView onSubmit={onSubmitMock} />
         )
 
-        const formWrapper = wrapper.find(Formik).renderProp('children')({ ...propsFormik });
+        const formWrapper = wrapper.find(Formik).renderProp('children')({ ...mockPropsFormik, ...mockPropsStateFormik, ...mockFormikHandlers })
 
         expect(formWrapper.matchesElement(
             <Form className={'root'}>
                 <FormikInput
-                    label={"Beer name:"}
-                    type={'text'}
-                    name={'beerName'}
+                    label='Beer name'
+                    name='beerName'
+                    errors={mockPropsStateFormik.errors.beerName}
+                    touched={mockPropsStateFormik.touched.beerName}
+                    value={mockPropsStateFormik.values.beerName}
+                    onChange={mockFormikHandlers.handleChange}
+                    onBlur={mockFormikHandlers.handleBlur}
                 />
-                <ErrorMessage name="beerName" />
-                <FormikSelectInput name="beerType" label="Type:">
+                <FormikSelectInput
+                    label="Beer type"
+                    name="beerType"
+                    errors={mockPropsStateFormik.errors.beerName}
+                    touched={mockPropsStateFormik.touched.beerName}
+                    value={mockPropsStateFormik.values.beerType}
+                    onChange={mockFormikHandlers.handleChange}
+                    onBlur={mockFormikHandlers.handleBlur}
+                >
                     {typesOfBeer}
                 </FormikSelectInput>
-                <ErrorMessage name="beerType" />
-                <FormikInput
-                    label={"Has corn?"}
-                    type={'checkbox'}
-                    name={'hasCorn'} />
                 <FormikInputTextarea
+                    label={'Ingredients'}
                     name={'ingredients'}
-                    label={'Ingredients:'}
-                    type={'text'} />
-                <ErrorMessage name="ingredients" />
-                <Button variant="contained" color="primary" type='submit'>Save</Button>
+                    errors={mockPropsStateFormik.errors.beerName}
+                    touched={mockPropsStateFormik.touched.beerName}
+                    value={mockPropsStateFormik.values.ingredients}
+                    onChange={mockFormikHandlers.handleChange}
+                    onBlur={mockFormikHandlers.handleBlur}
+                />
+                <FormikInputCheckbox
+                    label={'Contains corn'}
+                    onChange={mockFormikHandlers.handleChange}
+                    value={mockPropsStateFormik.values.hasCorn}
+                    name={'hasCorn'}
+                />
+                <Button
+                    color='primary'
+                    type='submit'
+                    disabled={!(mockComputedProps.isValid && mockComputedProps.dirty)}
+                >
+                    Save
+                        </Button>
             </Form>
         )).toBe(true)
     })
@@ -123,24 +200,6 @@ describe("CreateBeerFormikView", () => {
             ingredients: '',
         };
 
-        // const computedProps: FormikComputedProps<FormikValues> = {
-        //     dirty: false,
-        //     isValid: false,
-        //     initialValues: {
-        //         beerName: '',
-        //         beerType: '',
-        //         hasCorn: false,
-        //         ingredients: ''
-        //     },
-        //     initialErrors: error,
-        //     initialTouched: touch,
-        // }
-
-        // const propsRegisteredField = {
-        //     registerField: jest.fn(),
-        //     unregisterField: jest.fn()
-        // }
-
         const propsStateFormik = {
             touched: touch,
             errors: error,
@@ -161,7 +220,7 @@ describe("CreateBeerFormikView", () => {
         expect(propsHelpersFormik.resetForm).toHaveBeenCalledTimes(1);
 
     })
- 
+
     it('should throw a validation error if beerName is empty', () => {
         const onSubmitMock = jest.fn()
 
@@ -183,7 +242,6 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
             expect(error.errors).toEqual(['Required'])
         }
     })
@@ -209,7 +267,6 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
             expect(error.errors).toEqual(['Required'])
         }
     })
@@ -235,7 +292,6 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
             expect(error.errors).toEqual(['Required'])
         }
     })
@@ -261,7 +317,7 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
+
             expect(error.errors).toEqual(['Must be 200 characters or less'])
         }
     })
@@ -287,7 +343,6 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
             expect(error.errors).toEqual(['Must be 10 characters or more'])
         }
     })
@@ -339,54 +394,8 @@ describe("CreateBeerFormikView", () => {
             fail()
         }
         catch (error) {
-            console.log(error.errors)
             expect(error.errors).toEqual(['Must be 2 characters or more'])
         }
-    })
-
-    it.only('should render the correct error message if the user submits the form without the beer name', () => {
-        const onSubmitMock = jest.fn();
-
-        const formValues: CreateBeerFormikTypes = {
-            beerName: '',
-            beerType: 'ale',
-            hasCorn: true,
-            ingredients: 'Water and corn.'
-        }
-        const propsHelpersFormik = {
-            setStatus: jest.fn(),
-            setErrors: jest.fn(),
-            setSubmitting: jest.fn(),
-            setTouched: jest.fn(),
-            setValues: jest.fn(),
-            setFieldValue: jest.fn(),
-            setFieldError: jest.fn(),
-            setFieldTouched: jest.fn(),
-            validateForm: jest.fn(),
-            validateField: jest.fn(),
-            resetForm: jest.fn(),
-            submitForm: jest.fn(),
-            setFormikState: jest.fn(),
-        } as FormikHelpers<FormikValues>;
-
-        const wrapper = shallow(
-            <CreateBeerFormikView onSubmit={onSubmitMock} />
-        )
-
-        const propsFormik: any = {
-            onSubmit: onSubmitMock,
-            initialValues: {},
-            validationSchema: jest.fn()
-        }
-
-        wrapper.invoke('onSubmit')(formValues, propsHelpersFormik);
-        expect(propsHelpersFormik.resetForm).toHaveBeenCalled()
-        const formWrapper = wrapper.find(Formik).renderProp('children')({ ...propsFormik}).find(ErrorMessage).at(0)
-        expect(formWrapper.prop('name')).toEqual('beerName');
-        expect(formWrapper.text()).toEqual("<ErrorMessage name='beerName' />Required")
-        console.log(formWrapper.debug())
-
-    
     })
 
 })

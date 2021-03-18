@@ -1,20 +1,21 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { isValidElement, useCallback, useMemo } from 'react';
 import * as Yup from "yup";
 import { Formik, Form, ErrorMessage, FormikHelpers, FormikValues } from 'formik';
 import { CreateBeerFormikViewTypes } from './CreateBeerFormikView.types';
 import { typesOfBeer } from './typesOfBeer';
 import Button from '@material-ui/core/Button';
-import FormikInput from '../formikInputTextForm/FormikInputText';
-import FormikInputTextarea from '../formikTextareaForm/FormikInputTextArea';
-import FormikSelectInput from '../formikSelectInputForm/formikSelectInput';
-import { createBeerFormikStyles } from './CreateBeerFormikStyle.styles';
+import FormikInput from './formFields/FormikInputText';
+import FormikInputTextarea from './formFields/formikInputTextArea';
+import FormikSelectInput from './formFields/formikSelectInput';
+import formStyle from './CreateBeerFormikStyle.styles';
+import FormikInputCheckbox from './formFields/formikInputCheckbox';
 
 interface Props {
     onSubmit: (values: CreateBeerFormikViewTypes) => void,
 }
 
 function CreateBeerFormikView(props: Props) {
-    const classes = createBeerFormikStyles()
+    const classes = formStyle()
     const initialValues: CreateBeerFormikViewTypes = useMemo(
         () => ({
             beerName: '',
@@ -23,7 +24,7 @@ function CreateBeerFormikView(props: Props) {
             ingredients: ''
         }), [])
 
-    
+
     const handleSubmit = useCallback(
         (values: CreateBeerFormikViewTypes, { setSubmitting, resetForm }) => {
             props.onSubmit(values);
@@ -49,34 +50,58 @@ function CreateBeerFormikView(props: Props) {
             })
         }, []
     )
-   
+
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}>
-            { () => (
+            { ({ values, handleChange, isValid, errors, touched, dirty, handleBlur }) => (
                 <Form className={classes.root}>
                     <FormikInput
-                        label={"Beer name:"}
-                        type={'text'}
-                        name={'beerName'}
+                        label='Beer name'
+                        name='beerName'
+                        onChange={handleChange}
+                        value={values.beerName}
+                        errors={errors.beerName}
+                        touched={touched.beerName}
+                        onBlur={handleBlur}
                     />
-                    <ErrorMessage name='beerName' />
-                    <FormikSelectInput name="beerType" label="Type:">
+
+                    <FormikSelectInput
+                        label="Beer type"
+                        name="beerType"
+                        onChange={handleChange}
+                        value={values.beerType}
+                        errors={errors.beerType}
+                        touched={touched.beerType}
+                        onBlur={handleBlur}
+                    >
                         {typesOfBeer}
                     </FormikSelectInput>
-                    <ErrorMessage name='beerType' />
-                    <FormikInput
-                        label={"Has corn?"}
-                        type={'checkbox'}
-                        name={'hasCorn'} />
                     <FormikInputTextarea
+                        label={'Ingredients'}
                         name={'ingredients'}
-                        label={'Ingredients:'}
-                        type={'text'} />
-                    <ErrorMessage name="ingredients" />
-                    <Button variant="contained" color="primary" type='submit'>Save</Button>
+                        value={values.ingredients}
+                        onChange={handleChange}
+                        errors={errors.ingredients}
+                        touched={touched.ingredients}
+                        onBlur={handleBlur}
+
+                    />
+                    <FormikInputCheckbox
+                        label={'Contains corn'}
+                        onChange={handleChange}
+                        value={values.hasCorn}
+                        name={'hasCorn'}
+                    />
+                    <Button
+                        color='primary'
+                        type='submit'
+                        disabled={!(isValid && dirty)}
+                    >
+                        Save
+                        </Button>
                 </Form>
             )}
         </Formik>

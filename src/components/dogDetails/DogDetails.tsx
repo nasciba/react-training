@@ -13,9 +13,9 @@ const DogDetails = (props: Props) => {
         setCount(count + 1)
     }, [count])
     
-    const onBark = () => {
-        alert ('au au au au')
-    }
+    const onBark = useCallback(() => {
+        alert ('Woof woof woof!')
+    }, [])
 
     return (
             <DogDetailsView image={props.image} dogsName={props.dogsName} scolds={count} onCountScolds={onCount} onBark={onBark}/>

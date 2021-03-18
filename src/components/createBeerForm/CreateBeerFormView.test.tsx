@@ -1,58 +1,108 @@
 import { shallow } from 'enzyme';
-import Box from '@material-ui/core/Box'
-import CreateBeerFormView from './CreateBeerFormView'
-import Button from '../button/Button'
+import formStyle from './CreateBeerFormView.style'
+import CreateBeerFormView from './CreateBeerFormView';
+import Button from '../button/Button';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
 
-describe('CreateBeerForm', () => {
-    const mockFunction = jest.fn()
-    const instanceMockFunction = mockFunction();
+jest.mock('./CreateBeerFormView.style')
 
-    it('should render elements correctly', () => {
+describe('CreateBeerFormView', () => {
+
+    beforeEach(() => {
+        (formStyle as jest.Mock).mockReturnValue({
+            root: 'root',
+            margins: 'margins'
+        })
+    })
+
+
+    it('should render correctly', () => {
+        const mockHandleChange = jest.fn();
+        const mockHandleCheckboxValue = jest.fn();
+        const mockHandleSelectElement = jest.fn();
+        const mockHandleSubmit = jest.fn();
+        const mockBeername = 'Brahma';
+        const mockHasCorn = false;
+        const mockIngredients = "Water and corn."
+        const mockBeerType = 'ale'
+
+
         const wrapper = shallow(
             <CreateBeerFormView
-                beerName={'Brahma'}
-                beerType='ale'
-                ingredients="Water and corn"
-                hasCorn={false}
-                handleChange={instanceMockFunction}
-                handleCheckboxValue={instanceMockFunction}
-                handleSelectElement={instanceMockFunction}
-                handleSubmit={instanceMockFunction}
+                beerName={mockBeername}
+                beerType={mockBeerType}
+                ingredients={mockIngredients}
+                hasCorn={mockHasCorn}
+                handleChange={mockHandleChange}
+                handleCheckboxValue={mockHandleCheckboxValue}
+                handleSelectElement={mockHandleSelectElement}
+                handleSubmit={mockHandleSubmit}
             />)
+
         expect(wrapper.matchesElement(
-            <form>
-                <Box display="flex" flexDirection="column">
-                    <label>Beer name:
-                    <input
-                            type='text'
-                            name="beerName"
-                            value='Brahma'
-                            onChange={mockFunction}
+            <FormControl
+                className='root'
+            >
+                <TextField
+                    label='Beer name'
+                    name='beerName'
+                    variant='outlined'
+                    onChange={mockHandleChange}
+                    className='margins'
+                    value={mockBeername}
+                />
+                <TextField
+                    select={true}
+                    variant='outlined'
+                    className='margins'
+                    label='Beer type'
+                    name='beerType'
+                    onChange={mockHandleChange}
+                    value={mockBeerType}
+                >
+                    <MenuItem color='primary' key='ale' value='ale'>
+                        Ale
+                    </MenuItem>
+                    <MenuItem color='primary' key='lager' value='lager'>
+                        Lager
+                    </MenuItem>
+                    <MenuItem color='primary' key='stout' value='stout'>
+                        Stout
+                    </MenuItem>
+                    <MenuItem color='primary' key='pilsen' value='pilsen'>
+                        Pilsen
+                </MenuItem>
+                </TextField>
+                <TextField
+                    label='Ingredients'
+                    name='ingredients'
+                    variant='outlined'
+                    className='margins'
+                    onChange={mockHandleChange}
+                    value={mockIngredients}
+                    multiline
+                    rows={4}
+                />
+                <FormControlLabel
+                    label='Contains corn'
+                    labelPlacement='end'
+                    className='margins'
+                    control={
+                        <Checkbox
+                            onClick={mockHandleCheckboxValue}
+                            name='hasCorn'
+                            color='primary'
+                            checked={mockHasCorn}
                         />
-                    </label>
-                    <label>Type:
-                    <select
-                            name="beerType" value='ale'
-                            onChange={mockFunction}>
-                            <option value="ale" > Ale</option>
-                            <option value="lager">Lager</option>
-                            <option value="stout">Stout</option>
-                            <option value="pilsen">Pilsen</option>
-                    </select>
-                    </label>
-                    <label>
-                        Ingredients:
-                    <textarea
-                            value="Water and corn" name='ingredients' onChange={mockFunction}
-                        />
-                    </label>
-                    <label>
-                        Has corn?
-                    <input type="checkbox" onClick={mockFunction} />
-                    </label>
-                    <Button type="submit" onClick={mockFunction}>Enviar</Button>
-                </Box>
-            </form>
-        ))
+                    }
+                />
+                <Button type='submit' onClick={mockHandleSubmit}>Save</Button>
+            </FormControl>
+
+        )).toBe(true)
     })
 })

@@ -1,22 +1,26 @@
 import { makeStyles } from '@material-ui/core'
 
 const cardStyle = makeStyles({
-    root: {
-        width: '70%',
+    root: {  
         display: 'flex',
-        height: '100%',
+        width: '80%',
         flexDirection: "column",
         justify: "center",
         alignItems: "center",
-        border: 'solid #52F799 2px',
-        borderRadius: 15
+        borderRadius: 15,
+        margin: 20
     },
 
     media: {
-        height: '10%',
-        width: '60%',
-        margin: 15,
+        height: '20%',
+        width: '100%',
+    },
 
+    typography: {
+        color: '#947062',
+        margin: '10px 20px 10px 20px',
+        textAlign: 'center',
+        
     }
 })
 
