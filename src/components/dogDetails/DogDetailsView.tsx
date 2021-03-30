@@ -1,19 +1,19 @@
 import Box from '@material-ui/core/Box';
 import Button from '../button/Button';
-import cardStyle from './DogDetails.style';
+import cardStyle from './DogDetails.styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 interface Props {
     image: string,
-    dogsName: string,
+    name: string,
     scolds: number,
     onBark: () => void,
-    onCountScolds: () => void
+    onCount: () => void
 }
 
-function DogDetailsView(props: Props) {
+function DogDetailsView({image, name, scolds, onBark, onCount}: Props) {
     const classes = cardStyle()
 
     return (
@@ -22,17 +22,17 @@ function DogDetailsView(props: Props) {
                 component="img"
                 alt='dog'
                 height='150'
-                image={props.image}
+                image={image}
                 className={classes.media}>
             </CardMedia>
             <Typography variant='h6' className={classes.typography}>
-                {props.dogsName}
+                {name}
             </Typography>
             <Box justifyContent='center' display='flex' flexWrap='wrap'>
-                <Button type="button" onClick={props.onBark}>Bark</Button>
-                <Button type="button" onClick={props.onCountScolds}>Scold</Button>
+                <Button type='button' onClick={onBark}>Bark</Button>
+                <Button type='button' onClick={onCount}>Scold</Button>
             </Box>
-            <Typography variant="body1" component='p' className={classes.typography}>This dog has already been scolded {props.scolds} time(s)!</Typography>
+            <Typography variant="body1" component='p' className={classes.typography}>This dog has already been scolded {scolds} time(s)!</Typography>
         </Card>
     )
 }

@@ -3,10 +3,10 @@ import DogDetailsView from './DogDetailsView';
 
 interface Props {
     image: string,
-    dogsName: string,
+    name: string,
 }
 
-const DogDetails = (props: Props) => {
+const DogDetails = ({image, name}: Props) => {
     const [count, setCount] = useState(0);
 
     const onCount = useCallback(() => {
@@ -18,7 +18,7 @@ const DogDetails = (props: Props) => {
     }, [])
 
     return (
-            <DogDetailsView image={props.image} dogsName={props.dogsName} scolds={count} onCountScolds={onCount} onBark={onBark}/>
+            <DogDetailsView image={image} name={name} scolds={count} onCount={onCount} onBark={onBark}/>
     )
 }
 

@@ -5,9 +5,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import DogDetailsView from './DogDetailsView';
 import Button from '../button/Button';
-import cardStyle from './DogDetails.style';
+import cardStyle from './DogDetails.styles';
 
-jest.mock('./DogDetails.style')
+jest.mock('./DogDetails.styles')
 
 describe('DogDetailsView', () => {
     beforeEach(() => {
@@ -25,7 +25,7 @@ describe('DogDetailsView', () => {
 
     it('should render correctly', () => {
         const wrapper = shallow(
-            <DogDetailsView scolds={0} image={'anImage'} dogsName={"Adolfo"} onBark={onBark} onCountScolds={onCountScolds} />
+            <DogDetailsView scolds={0} image={'anImage'} name={"Adolfo"} onBark={onBark} onCount={onCountScolds} />
         )
         expect(wrapper.matchesElement(
             <Card className='root'>
