@@ -9,7 +9,7 @@ describe("DogListView", () => {
       { name: "akita", image: "someImageUrl" },
       { name: "african", image: "someImageUrl" },
     ];
-    const wrapper = shallow(<DogListView dogBreedsList={breeds} />);
+    const wrapper = shallow(<DogListView dogBreedList={breeds} />);
 
     expect(
       wrapper.matchesElement(

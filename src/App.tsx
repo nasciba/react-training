@@ -9,27 +9,17 @@ import {
 import theme from "./styles/theme";
 import appStyle from "./styles/App.style";
 import CreateBeerForm from "./components/createBeerForm/CreateBeerForm";
-import CreateBeerFormik from "./components/createBeerFormikForm/CreateBeerFormik";
-import { getAllDogs } from "./services/dog/dogService";
-import DogList from "./components/dogList/dogList/DogList";
+import CreateBeerFormik from "./components/createBeerFormikForm/CreateBeerFormik";import WrapperDogList from "./components/wrapperDogList/WrapperDogList";
 
 function App() {
   const classes = appStyle();
-
-  const apiCall = async () => {
-    await getAllDogs();
-  };
-
-  React.useEffect(() => {
-    apiCall();
-  });
 
   return (
     <React.Fragment>
       <CssBaseline>
         <ThemeProvider theme={theme}>
-          <DogList />
           <Grid container className={classes.root}>
+            <WrapperDogList />
             <Grid
               container
               direction="row"
@@ -39,9 +29,9 @@ function App() {
               <Grid sm={3}>
                 <DogDetails
                   image={
-                    'https://content.fortune.com/wp-content/uploads/2019/01/boo.jpg'
+                    "https://content.fortune.com/wp-content/uploads/2019/01/boo.jpg"
                   }
-                  name={'Adolfo'}
+                  name={"Adolfo"}
                 />
               </Grid>
             </Grid>
@@ -70,7 +60,7 @@ function App() {
                 item
                 xs={6}
               >
-                <Typography>Exercise 6 - Using Formik</Typography>
+                <Typography>Formik</Typography>
                 <CreateBeerFormik />
               </Grid>
             </Grid>

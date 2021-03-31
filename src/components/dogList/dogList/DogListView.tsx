@@ -4,13 +4,13 @@ import List from '@material-ui/core/List';
 import DogListItem from '../listItem/listItem';
 
 interface Props {
-    dogBreedsList: DogBreed[]
+    dogBreedList: DogBreed[]
 } 
 
-function DogListView({ dogBreedsList }: Props) {
+function DogListView({ dogBreedList }: Props) {
     return(
         <List>
-            {dogBreedsList.map((item) => {
+            {dogBreedList.map((item) => {
                return <DogListItem 
                 key={item.name}
                 name={item.name} 
