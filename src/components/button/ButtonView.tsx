@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import buttonStyle from './Button.style';
+import { ReactNode } from 'react';
+import buttonStyle from './Button.styles';
 import Button from '@material-ui/core/Button'
 
 interface Props {

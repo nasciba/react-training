@@ -7,8 +7,13 @@ import WrapperDogListView from "./WrapperDogListView";
 
 jest.mock("../../services/dog/dogService");
 
-describe("DogList", () => {
-  /* it("should render the view with the right props", () => {
+describe("WrapperDogList", () => {
+  afterEach(() => {
+    const useStateMock = jest.spyOn(React, "useState");
+    useStateMock.mockRestore();
+  });
+
+  it("should render the view with the right props", () => {
     const wrapper = shallow(<WrapperDogList />);
 
     expect(wrapper.type()).toBe(WrapperDogListView);
@@ -16,7 +21,7 @@ describe("DogList", () => {
     expect(wrapper.props()).toMatchObject({
       dogBreedList: [],
     });
-  }); */
+  });
   it("should get a list of dog breeds", () => {
     jest.spyOn(React, "useEffect").mockImplementationOnce((f) => once(f)());
 
@@ -24,6 +29,32 @@ describe("DogList", () => {
 
     expect(getAllDogs).toBeCalled();
   });
+  it("should find a dog breed in dogBreedList when onSelectDog is called", () => {
+    const useState = React.useState;
+    const dogBreedListStateMock = [
+      { name: "african", image: "url" },
+      { name: "akita", image: "url" },
+    ];
+    const selectedBreedMock = dogBreedListStateMock[1];
+    jest
+      .spyOn(React, "useState")
+      .mockImplementationOnce(() => useState(dogBreedListStateMock));
+    const wrapper = shallow(<WrapperDogList />);
+    wrapper.invoke("onSelectDog")("akita");
+    expect(wrapper.prop("selectedBreed")).toEqual(selectedBreedMock);
+  });
+  it("should return if there's no selected value", () => {
+    const useState = React.useState;
+    const dogBreedListStateMock = [
+      { name: "african", image: "url" },
+      { name: "akita", image: "url" },
+    ];
 
-  
+    jest
+      .spyOn(React, "useState")
+      .mockImplementationOnce(() => useState(dogBreedListStateMock));
+    const wrapper = shallow(<WrapperDogList />);
+    wrapper.invoke("onSelectDog")("");
+    expect(wrapper.prop("selectedBreed")).toEqual({});
+  });
 });

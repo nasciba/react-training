@@ -20,12 +20,7 @@ describe('CreateBeerForm', () => {
     })
 
     it('should handle the onSubmit event', () => {
-        const mockValues = {
-            beerName: 'Brahma',
-            beerType: 'pilsen',
-            hasCorn: true,
-            ingredients: 'Water, corn.'
-        }
+        
         const wrapper = shallow(
             <CreateBeerForm
             />

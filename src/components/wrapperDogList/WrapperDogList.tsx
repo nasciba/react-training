@@ -6,17 +6,26 @@ import WrapperDogListView from "./WrapperDogListView";
 function WrapperDogList() {
   const [dogBreedList, setDogBreedList] = React.useState<DogBreed[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [selectedBreed, setSelectedBreed] = React.useState<DogBreed>(
+    {} as DogBreed
+  );
 
   const getAllDogBreeds = async () => {
     setIsLoading(true);
     try {
       const dogBreedList = await getAllDogs();
       setDogBreedList(dogBreedList);
-    } catch (error) {
-      console.log("error", error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onSelectDog = (dogsName: string) => {
+    const selectedBreed = dogBreedList.find(
+      (breed) => breed.name.toLowerCase() === dogsName.toLowerCase()
+    );
+    if (!selectedBreed) return;
+    setSelectedBreed(selectedBreed);
   };
 
   React.useEffect(() => {
@@ -24,7 +33,12 @@ function WrapperDogList() {
   }, []);
 
   return (
-    <WrapperDogListView dogBreedList={dogBreedList} isLoading={isLoading} />
+    <WrapperDogListView
+      dogBreedList={dogBreedList}
+      isLoading={isLoading}
+      selectedBreed={selectedBreed}
+      onSelectDog={onSelectDog}
+    />
   );
 }
 
