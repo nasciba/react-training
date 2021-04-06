@@ -1,5 +1,4 @@
 import React from "react";
-import DogDetails from "./components/dogDetails/DogDetails";
 import {
   CssBaseline,
   ThemeProvider,
@@ -26,14 +25,7 @@ function App() {
               justify="center"
               alignItems="center"
             >
-              <Grid sm={3}>
-                <DogDetails
-                  image={
-                    "https://content.fortune.com/wp-content/uploads/2019/01/boo.jpg"
-                  }
-                  name={"Adolfo"}
-                />
-              </Grid>
+              
             </Grid>
             <Grid
               container

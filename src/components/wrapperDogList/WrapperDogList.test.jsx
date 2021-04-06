@@ -43,6 +43,28 @@ describe("WrapperDogList", () => {
     wrapper.invoke("onSelectDog")("akita");
     expect(wrapper.prop("selectedBreed")).toEqual(selectedBreedMock);
   });
+  it("should update the scolds when onScoldCounter is invoked", () => {
+    const useState = React.useState;
+    const dogBreedListMock = [
+      { name: "african", image: "url", scolds: 0 },
+      { name: "akita", image: "url", scolds: 0 },
+    ];
+    const selectedBreedMock = { name: "african", image: "url", scolds: 0 };
+    jest
+      .spyOn(React, "useState")
+      .mockImplementationOnce(() => useState(dogBreedListMock));
+
+    const wrapper = shallow(<WrapperDogList />);
+    wrapper.invoke("onSelectDog")("african");
+    wrapper.invoke("onScoldCounter")();
+
+    const dogListAfterScold = wrapper.prop("dogBreedList");
+    const scoldedDog = dogListAfterScold.find(
+      (dog) => dog.name === selectedBreedMock.name
+    );
+    const { scolds } = scoldedDog;
+    expect(scolds).toEqual(1);
+  });
   it("should return if there's no selected value", () => {
     const useState = React.useState;
     const dogBreedListStateMock = [

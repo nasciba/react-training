@@ -9,9 +9,10 @@ interface Props {
   name: string;
   image: string;
   selectedBreed: DogBreed;
+  scolds: number,
   onSelectDog: (dogsName: string) => void;
 }
-function DogListItemView({ name, image, onSelectDog, selectedBreed }: Props) {
+function DogListItemView({ name, image, onSelectDog, scolds, selectedBreed }: Props) {
   return (
     <ListItem
       button
@@ -21,7 +22,7 @@ function DogListItemView({ name, image, onSelectDog, selectedBreed }: Props) {
       <ListItemAvatar>
         <Avatar alt="Dog Image" src={image} />
       </ListItemAvatar>
-      <ListItemText>{capitalize(name)}</ListItemText>
+      <ListItemText primary={capitalize(name)} secondary={scolds}/>
     </ListItem>
   );
 }

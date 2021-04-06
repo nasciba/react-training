@@ -1,4 +1,5 @@
 export interface DogBreed {
     name: string,
-    image: string
+    image: string,
+    scolds: number
 }

@@ -7,7 +7,7 @@ export async function getAllDogs(): Promise<DogBreed[]> {
     const responseApi = response.data.message;
     const dogBreedsList = Object.keys(responseApi);
     if (response.data.status !== "success") {
-      throw new Error("Houve um erro na requisição");
+      throw new Error('Houve um erro na requisição');
     }
     const dogBreedNames = Promise.all(
       dogBreedsList.map(async (breed) => {
@@ -15,6 +15,7 @@ export async function getAllDogs(): Promise<DogBreed[]> {
         return {
           name: breed,
           image: image,
+          scolds: 0
         } as DogBreed;
       })
     );

@@ -12,6 +12,7 @@ describe("DogListItemView", () => {
     const dog = {
       name: "Akita",
       image: "imageUrl",
+      scolds: 0
     };
     const onSelectDogMock = jest.fn();
     const wrapper = shallow(
@@ -20,6 +21,7 @@ describe("DogListItemView", () => {
         image={dog.image}
         onSelectDog={onSelectDogMock}
         selectedBreed={{}}
+        scolds={dog.scolds}
       />
     );
     expect(
@@ -32,7 +34,7 @@ describe("DogListItemView", () => {
           <ListItemAvatar>
             <Avatar alt="Dog Image" src={dog.image} />
           </ListItemAvatar>
-          <ListItemText>{capitalize(dog.name)}</ListItemText>
+          <ListItemText primary={capitalize(dog.name)} secondary={dog.scolds}/>
         </ListItem>
       )
     ).toBe(true);

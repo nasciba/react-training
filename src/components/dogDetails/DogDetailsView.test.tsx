@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import DogDetailsView from './DogDetailsView';
 import Button from '../button/Button';
 import cardStyle from './DogDetails.styles';
+import { capitalize } from 'lodash';
 
 jest.mock('./DogDetails.styles')
 
@@ -18,32 +19,29 @@ describe('DogDetailsView', () => {
         });
     });
 
-    const onBark = jest.fn();
-    const instanceOnBark = onBark()
-    const onCountScolds = jest.fn();
-    const instanceOnCountScolds = onCountScolds
-
+    const onBarkMock = jest.fn();
+    const onScoldCounterMock = jest.fn();
+    const nameMock = 'adolfo';
+    const imageMock = 'anImage';
     it('should render correctly', () => {
         const wrapper = shallow(
-            <DogDetailsView scolds={0} image={'anImage'} name={"Adolfo"} onBark={onBark} onCount={onCountScolds} />
+            <DogDetailsView  image={imageMock} name={nameMock} onBark={onBarkMock} onScoldCounter={onScoldCounterMock} />
         )
         expect(wrapper.matchesElement(
             <Card className='root'>
                 <CardMedia
                     component="img"
                     alt='dog'
-                    height='150'
-                    image='anImage'
+                    image={imageMock}
                     className='media'>
                 </CardMedia>
                 <Typography variant='h6' className='typography'>
-                    Adolfo
+                    {capitalize(nameMock)}
                 </Typography>
                 <Box justifyContent='center' display='flex' flexWrap='wrap'>
-                    <Button type="button" onClick={instanceOnBark}>Bark</Button>
-                    <Button type="button" onClick={instanceOnCountScolds}>Scold</Button>
+                    <Button type="button" onClick={onBarkMock}>Bark</Button>
+                    <Button type="button" onClick={onScoldCounterMock}>Scold</Button>
                 </Box>
-                <Typography variant="body1" component='p' className='typography'>This dog has already been scolded {0} time(s)!</Typography>
             </Card>
         )).toBe(true)
     })

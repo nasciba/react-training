@@ -20,6 +20,15 @@ function WrapperDogList() {
     }
   };
 
+  const onScoldCounter = () => {
+    const dogBreeds = dogBreedList.map((dog) => {
+      if (dog.name.toLowerCase() === selectedBreed.name.toLowerCase())
+        return { ...dog, scolds: dog.scolds + 1 };
+      return dog;
+    });
+    setDogBreedList(dogBreeds);
+  };
+
   const onSelectDog = (dogsName: string) => {
     const selectedBreed = dogBreedList.find(
       (breed) => breed.name.toLowerCase() === dogsName.toLowerCase()
@@ -38,6 +47,7 @@ function WrapperDogList() {
       isLoading={isLoading}
       selectedBreed={selectedBreed}
       onSelectDog={onSelectDog}
+      onScoldCounter={onScoldCounter}
     />
   );
 }

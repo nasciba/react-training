@@ -1,4 +1,3 @@
-import React from 'react';
 import SpinnerView from './SpinnerView'
 
 
